@@ -24,15 +24,15 @@ public class PaymentService {
 
     public PaymentStatus simulatePayment(String orderId, List<Produto> produtos, String paymentName) {
         Random random = new Random();
-        //PaymentStatus status = random.nextBoolean() ? PaymentStatus.SUCCESS : PaymentStatus.ERROR;
+        PaymentStatus status = random.nextBoolean() ? PaymentStatus.SUCCESS : PaymentStatus.ERROR;
         Pagamento pagamento = Pagamento.builder()
                 .pedidoId(orderId)
                 .produtos(produtos)
                 .nomePagamento(paymentName)
-                .status(PaymentStatus.ERROR.name())
+                .status(status.toString())
                 .build();
         paymentStatusProducer.sendPaymentStatus(pagamento);
-        return pagamento.getStatus().equals(PaymentStatus.SUCCESS.name()) ? PaymentStatus.SUCCESS : PaymentStatus.ERROR;
+        return status;
     }
 
 }
